@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
+import { IServiceUser } from '../interfaces/IService';
 
 export default class loginController {
-  constructor(private userService) {
+  constructor(private userService: IServiceUser) {
   }
 
   public find = async (req: Request, _res: Response) => {
