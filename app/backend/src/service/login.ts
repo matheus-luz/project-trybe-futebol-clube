@@ -1,8 +1,14 @@
 import * as bcryptjs from 'bcryptjs';
 import { IUser } from '../interfaces/ILogin';
 import User from '../database/models/Users';
+import Token from '../auth/token';
 
-export default class loginService {
+export default class LoginService {
+  private token;
+  constructor() {
+    this.token = new Token();
+  }
+
   public find = async (user: IUser) => {
     const { email, password } = user;
 
@@ -12,15 +18,17 @@ export default class loginService {
       return {
         status: 401,
         data: {
-          message: 'Incorrect email or password',
+          message: 'message": "Incorrect email or password',
         },
       };
     }
 
+    const token = this.token.generate({ id: emailUser.id, email });
+
     return {
       status: 200,
       data: {
-        message: 'Sucess',
+        token,
       },
     };
   };
