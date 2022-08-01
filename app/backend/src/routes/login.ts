@@ -1,17 +1,16 @@
 import { Router } from 'express';
-import { validationUsername, validatePassword } from '../middlewares/user';
-import UserController from '../controllers/login';
+import LoginValidate from '../middlewares/login';
+import LoginController from '../controllers/login';
 
-const router = Router();
+const routerLogin = Router();
 
-const userController = new UserController();
+const userController = new LoginController();
+const userValidate = new LoginValidate();
 
-// Cadastrar um novo Usuário
-router.post(
-  '/login',
-  validationUsername,
-  validatePassword,
-  userController.find,
+routerLogin.post(
+  '/',
+  userValidate.validations,
+  userController.login,
 );
 
-export default router;
+export default routerLogin;

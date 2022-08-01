@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
-import { IServiceUser } from '../interfaces/IService';
+import { IUser } from '../interfaces/ILogin';
+import LoginService from '../service/login';
 
 export default class loginController {
-  constructor(private userService: IServiceUser) {
+  private service;
+  constructor() {
+    this.service = new LoginService();
   }
 
-  public find = async (req: Request, _res: Response) => {
-    const user = req.body;
-    await this.userService.find(user);
+  public login = async (req: Request, res: Response) => {
+    const user = req.body as IUser;
+    const { status, data } = await this.service.find(user);
+
+    return res.status(status).json(data);
   };
 }
