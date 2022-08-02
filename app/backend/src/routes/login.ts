@@ -1,16 +1,23 @@
 import { Router } from 'express';
 import LoginValidate from '../middlewares/login';
+import Authorization from '../middlewares/authorization';
 import LoginController from '../controllers/login';
 
 const routerLogin = Router();
 
 const userController = new LoginController();
 const userValidate = new LoginValidate();
+const authorization = new Authorization();
 
 routerLogin.post(
   '/',
-  (req, res, next) => userValidate.validations(req, res, next),
-  (req, res) => userController.login(req, res),
+  userValidate.validations,
+  userController.login,
+);
+
+routerLogin.get(
+  '/',
+  authorization.validateToken,
 );
 
 export default routerLogin;

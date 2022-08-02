@@ -14,13 +14,11 @@ export default class LoginService {
 
     const emailUser = await User.findOne({ where: { email } });
 
-    console.log('Chegou');
-
     if (!emailUser || !bcryptjs.compareSync(password, emailUser.password)) {
       return {
         status: 401,
         data: {
-          message: 'message": "Incorrect email or password',
+          message: 'Incorrect email or password',
         },
       };
     }
