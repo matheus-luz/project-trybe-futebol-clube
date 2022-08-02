@@ -12,8 +12,6 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
-
-    this.routes(this.app);
   }
 
   private config():void {
@@ -26,6 +24,8 @@ class App {
 
     this.app.use(express.json());
     this.app.use(accessControl);
+
+    this.routes(this.app);
   }
 
   public start(PORT: string | number):void {

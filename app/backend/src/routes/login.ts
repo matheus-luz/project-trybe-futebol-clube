@@ -9,8 +9,8 @@ const userValidate = new LoginValidate();
 
 routerLogin.post(
   '/',
-  userValidate.validations,
-  userController.login,
+  (req, res, next) => userValidate.validations(req, res, next),
+  (req, res) => userController.login(req, res),
 );
 
 export default routerLogin;

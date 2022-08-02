@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { IUser } from '../interfaces/ILogin';
 import LoginService from '../service/login';
 
-export default class loginController {
+export default class LoginController {
   private service;
   constructor() {
     this.service = new LoginService();

@@ -14,7 +14,9 @@ export default class LoginService {
 
     const emailUser = await User.findOne({ where: { email } });
 
-    if (!emailUser || await bcryptjs.compare(password, emailUser.password)) {
+    console.log('Chegou');
+
+    if (!emailUser || !bcryptjs.compareSync(password, emailUser.password)) {
       return {
         status: 401,
         data: {
@@ -23,7 +25,7 @@ export default class LoginService {
       };
     }
 
-    const token = this.token.generate({ id: emailUser.id, email });
+    const token = this.token.generate({ email, password });
 
     return {
       status: 200,
