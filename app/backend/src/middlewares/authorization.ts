@@ -16,7 +16,7 @@ export default class Authorization {
 
       const user = await Users.findOne({ where: { email } });
 
-      if (!user) return res.status(401).json({ error: 'Invalid user' });
+      if (!user) return res.status(401).json({ error: 'Invalid token' });
 
       return res.status(200).json({ role: user.role });
     } catch (err: unknown) {
