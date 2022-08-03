@@ -11,4 +11,15 @@ export default class TeamService {
       },
     };
   };
+
+  public findId = async (id: string) => {
+    const team = await Teams.findOne({ where: { id } });
+
+    return {
+      status: 200,
+      data: {
+        team,
+      },
+    };
+  };
 }
