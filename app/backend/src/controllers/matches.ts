@@ -10,6 +10,6 @@ export default class MatchesController {
   public getAll = async (_req: Request, res: Response) => {
     const { status, data } = await this.service.getAll();
 
-    return res.status(status).json(data.matches);
+    return res.status(status).json(data);
   };
 }
