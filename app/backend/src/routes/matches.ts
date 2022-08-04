@@ -8,4 +8,6 @@ const matchesController = new MatchesController();
 
 routerMatches.get('/', matchesController.getAll);
 
+routerMatches.post('/', matchesController.update);
+
 export default routerMatches;

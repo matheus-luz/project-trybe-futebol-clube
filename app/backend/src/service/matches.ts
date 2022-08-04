@@ -24,4 +24,27 @@ export default class Matcheservice {
       data: matches,
     };
   };
+
+  public update = async (req: any) => {
+    const {
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals } = req.body;
+
+    const { id } = await Matches.create({
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals,
+      inProgress: true,
+    });
+
+    const match = await Matches.findOne({ where: { id } });
+
+    return {
+      status: 201,
+      data: match,
+    };
+  };
 }
