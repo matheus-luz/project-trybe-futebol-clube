@@ -25,7 +25,7 @@ export default class Matcheservice {
     };
   };
 
-  public update = async (req: any) => {
+  public create = async (req: any) => {
     const {
       homeTeam,
       awayTeam,
@@ -45,6 +45,15 @@ export default class Matcheservice {
     return {
       status: 201,
       data: match,
+    };
+  };
+
+  public update = async (id: string) => {
+    await Matches.update({ inProgress: false }, { where: { id } });
+
+    return {
+      status: 200,
+      data: { message: 'Finished' },
     };
   };
 }

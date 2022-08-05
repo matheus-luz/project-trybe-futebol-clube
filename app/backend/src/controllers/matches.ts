@@ -13,8 +13,15 @@ export default class MatchesController {
     return res.status(status).json(data);
   };
 
+  public create = async (req: Request, res: Response) => {
+    const { status, data } = await this.service.create(req);
+
+    return res.status(status).json(data);
+  };
+
   public update = async (req: Request, res: Response) => {
-    const { status, data } = await this.service.update(req);
+    const { id } = req.params;
+    const { status, data } = await this.service.update(id);
 
     return res.status(status).json(data);
   };
