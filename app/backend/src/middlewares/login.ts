@@ -13,8 +13,6 @@ export default class LoginValidate {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
 
-    // const [valid, messege] = this.findValidations(email, password);
-
     if (!this.findValidations(email)) {
       return res.status(400).json({ message: 'email must be a valid email' });
     }
