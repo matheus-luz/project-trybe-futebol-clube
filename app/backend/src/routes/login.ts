@@ -15,6 +15,6 @@ routerLogin.post(
   userController.login,
 );
 
-routerLogin.get('/validate', authorization.validateToken);
+routerLogin.get('/validate', authorization.validateToken, userController.validate);
 
 export default routerLogin;
