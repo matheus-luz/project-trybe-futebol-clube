@@ -25,4 +25,12 @@ export default class MatchesController {
 
     return res.status(status).json(data);
   };
+
+  public finishId = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { homeTeamGoals, awayTeamGoals } = req.body;
+    const { status, data } = await this.service.finishId(id, homeTeamGoals, awayTeamGoals);
+
+    return res.status(status).json(data);
+  };
 }

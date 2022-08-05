@@ -56,4 +56,18 @@ export default class Matcheservice {
       data: { message: 'Finished' },
     };
   };
+
+  public finishId = async (id: string, homeTeamGoals: number, awayTeamGoals: number) => {
+    await Matches.update(
+      { homeTeamGoals,
+        awayTeamGoals,
+        inProgress: true },
+      { where: { id } },
+    );
+
+    return {
+      status: 200,
+      data: { homeTeamGoals, awayTeamGoals },
+    };
+  };
 }
