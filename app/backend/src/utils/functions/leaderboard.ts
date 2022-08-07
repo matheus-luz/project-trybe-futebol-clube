@@ -124,12 +124,13 @@ export default class LeaderboardFunctions {
   };
 
   public getGoalsBalance = (teams: TTeam, compare: string) => {
+    let count = 0;
     if (compare === 'home') {
-      return this.getGoalsFavor(teams, compare) - this.getGoalsOwn(teams, compare);
+      count = this.getGoalsFavor(teams, compare) - this.getGoalsOwn(teams, compare);
     } if (compare === 'away') {
-      return this.getGoalsOwn(teams, compare) - this.getGoalsFavor(teams, compare);
+      count = this.getGoalsFavor(teams, compare) - this.getGoalsOwn(teams, compare);
     }
-    return 0;
+    return count;
   };
 
   public getEfficiency = (teams: TTeam, compare: string) => {

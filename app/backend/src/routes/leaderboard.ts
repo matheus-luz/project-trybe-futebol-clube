@@ -11,7 +11,7 @@ routerLeaderboard.get(
 
 routerLeaderboard.get(
   '/away',
-  leaderboard.getEveryTeamHome,
+  leaderboard.getEveryTeamAway,
 );
 
 export default routerLeaderboard;

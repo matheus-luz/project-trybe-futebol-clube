@@ -22,8 +22,6 @@ export default class LeaderboardService {
 
   public getEveryTeam = (teams: Array<any>, compare: string) => {
     const leader = teams.map((team: TTeam) => this.boardFormat(team, compare));
-    const le = teams.map((team: TTeam) => this.boardFormat(team, 'home'));
-    console.log(le);
     return this.functions.getOrderTeams(leader);
   };
 }

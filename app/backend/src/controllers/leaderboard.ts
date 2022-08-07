@@ -26,7 +26,12 @@ export default class LoginController {
 
   public getEveryTeamAway = async (req: Request, res: Response) => {
     // const {} = req.baseUrl;
-    const allTeams = await Teams.findAll();
+    const allTeams = await Teams.findAll({
+      include: [{ model: Matches, as: 'homeMatches', where: { inProgress: false } },
+        { model: Matches, as: 'awayMatches', where: { inProgress: false } },
+      ],
+      attributes: { exclude: ['id'] },
+    });
 
     const ratingTeams = this.service.getEveryTeam(allTeams, 'away');
 
