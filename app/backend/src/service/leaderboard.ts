@@ -10,9 +10,9 @@ export default class LeaderboardService {
   private boardFormat = (team: TTeam, compare: string) => ({
     name: team.teamName,
     totalPoints: this.functions.getTotalPoints(team, compare),
-    totalGames: 3,
+    totalGames: this.functions.getTotalGames(team, compare),
     totalVictories: this.functions.getTotalVictory(team, compare),
-    totalDraws: this.functions.getTotalDraws(team),
+    totalDraws: this.functions.getTotalDraws(team, compare),
     totalLosses: this.functions.getTotalLosses(team, compare),
     goalsFavor: this.functions.getGoalsFavor(team, compare),
     goalsOwn: this.functions.getGoalsOwn(team, compare),
@@ -22,6 +22,8 @@ export default class LeaderboardService {
 
   public getEveryTeam = (teams: Array<any>, compare: string) => {
     const leader = teams.map((team: TTeam) => this.boardFormat(team, compare));
+    const le = teams.map((team: TTeam) => this.boardFormat(team, 'home'));
+    console.log(le);
     return this.functions.getOrderTeams(leader);
   };
 }

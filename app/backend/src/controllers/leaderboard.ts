@@ -13,10 +13,10 @@ export default class LoginController {
   public getEveryTeamHome = async (_req: Request, res: Response) => {
   // const {} = req.baseUrl;
     const allTeams = await Teams.findAll({
-      include: [{ model: Matches, as: 'homeMatches' },
-        { model: Matches, as: 'awayMatches' },
+      include: [{ model: Matches, as: 'homeMatches', where: { inProgress: false } },
+        { model: Matches, as: 'awayMatches', where: { inProgress: false } },
       ],
-      attributes: { exclude: ['id', 'inProgress'] },
+      attributes: { exclude: ['id'] },
     });
 
     const ratingTeams = this.service.getEveryTeam(allTeams, 'home');
@@ -24,12 +24,12 @@ export default class LoginController {
     return res.status(200).json(ratingTeams);
   };
 
-  // public getEveryTeamAway = async (req: Request, res: Response) => {
-  //   // const {} = req.baseUrl;
-  //   const allTeams = await Teams.findAll();
+  public getEveryTeamAway = async (req: Request, res: Response) => {
+    // const {} = req.baseUrl;
+    const allTeams = await Teams.findAll();
 
-  //   const ratingTeams = this.service.getEveryTeam(allTeams, 'away');
+    const ratingTeams = this.service.getEveryTeam(allTeams, 'away');
 
-  //   return res.status(200).json(ratingTeams);
-  // };
+    return res.status(200).json(ratingTeams);
+  };
 }
