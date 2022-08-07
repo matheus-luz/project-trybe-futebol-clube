@@ -18,7 +18,6 @@ describe('Testa a rota /leaderboard', () => {
     expect(chaiHttpResponse.status).to.be.eq(200);
   });
 
-
   it('busque todas as partidas que foram ganhadas em fora de casa e volte com status 200 e volta lider do raking', async () => {
     const chaiHttpResponse = await chai.request(app)
     .patch('/leaderboard/away').send();
