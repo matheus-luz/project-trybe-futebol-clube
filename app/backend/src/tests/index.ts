@@ -63,4 +63,4 @@ export const teams = [
 		"id": 16,
 		"teamName": "São Paulo"
 	}
-]
+];

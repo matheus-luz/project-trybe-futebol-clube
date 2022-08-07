@@ -1,8 +1,14 @@
+import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 
 export default class TeamService {
   public getAll = async () => {
-    const teams = await Teams.findAll();
+    const teams = await Teams.findAll({
+      include: [{ model: Matches, as: 'homeMatches' },
+        { model: Matches, as: 'awayMatches' },
+      ],
+      attributes: { exclude: ['id', 'inProgress'] },
+    });
 
     return {
       status: 200,
