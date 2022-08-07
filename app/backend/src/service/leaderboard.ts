@@ -1,5 +1,4 @@
 import LeaderboardFunctions from '../utils/functions/leaderboard';
-import { TMatch } from '../types/TMatch';
 import { TTeam } from '../types/TTeam';
 
 export default class LeaderboardService {
@@ -8,27 +7,21 @@ export default class LeaderboardService {
     this.functions = new LeaderboardFunctions();
   }
 
-  private joinTable = (team: TTeam, matches: TMatch[]) =>
-    matches.filter((match: TMatch) => match.homeTeam === team.id);
-
-  private boardFormat = (matches: TMatch[], team: TTeam, compare: string) => ({
+  private boardFormat = (team: TTeam, compare: string) => ({
     name: team.teamName,
-    totalPoints: this.functions.getTotalPoints(matches, compare),
-    totalGames: this.functions.getTotalGames(matches),
-    totalVictories: this.functions.getTotalVictory(matches, compare),
-    totalDraws: this.functions.getTotalDraws(matches),
-    totalLosses: this.functions.getTotalLosses(matches, compare),
-    goalsFavor: this.functions.getGoalsFavor(matches, compare),
-    goalsOwn: this.functions.getGoalsOwn(matches, compare),
-    goalsBalance: this.functions.getGoalsBalance(matches, compare),
-    efficiency: this.functions.getEfficiency(matches, compare),
+    totalPoints: this.functions.getTotalPoints(team, compare),
+    totalGames: 3,
+    totalVictories: this.functions.getTotalVictory(team, compare),
+    totalDraws: this.functions.getTotalDraws(team),
+    totalLosses: this.functions.getTotalLosses(team, compare),
+    goalsFavor: this.functions.getGoalsFavor(team, compare),
+    goalsOwn: this.functions.getGoalsOwn(team, compare),
+    goalsBalance: this.functions.getGoalsBalance(team, compare),
+    efficiency: this.functions.getEfficiency(team, compare),
   });
 
-  public getEveryTeam = (teams: TTeam[], matches: TMatch[], compare: string) => {
-    const leader = teams.map((team) => {
-      const filtered = this.joinTable(team, matches);
-      return this.boardFormat(filtered, team, compare);
-    });
+  public getEveryTeam = (teams: Array<any>, compare: string) => {
+    const leader = teams.map((team: TTeam) => this.boardFormat(team, compare));
     return this.functions.getOrderTeams(leader);
   };
 }

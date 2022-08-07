@@ -10,23 +10,26 @@ export default class LoginController {
     this.service = new LeaderboardService();
   }
 
-  public getEveryTeamHome = async (req: Request, res: Response) => {
-    // const {} = req.baseUrl;
-    const allTeams = await Teams.findAll();
-    const allMatches = await Matches.findAll();
+  public getEveryTeamHome = async (_req: Request, res: Response) => {
+  // const {} = req.baseUrl;
+    const allTeams = await Teams.findAll({
+      include: [{ model: Matches, as: 'homeMatches' },
+        { model: Matches, as: 'awayMatches' },
+      ],
+      attributes: { exclude: ['id', 'inProgress'] },
+    });
 
-    const ratingTeams = this.service.getEveryTeam(allTeams, allMatches, 'home');
-
-    return res.status(200).json(ratingTeams);
-  };
-
-  public getEveryTeamAway = async (req: Request, res: Response) => {
-    // const {} = req.baseUrl;
-    const allTeams = await Teams.findAll();
-    const allMatches = await Matches.findAll();
-
-    const ratingTeams = this.service.getEveryTeam(allTeams, allMatches, 'away');
+    const ratingTeams = this.service.getEveryTeam(allTeams, 'home');
 
     return res.status(200).json(ratingTeams);
   };
+
+  // public getEveryTeamAway = async (req: Request, res: Response) => {
+  //   // const {} = req.baseUrl;
+  //   const allTeams = await Teams.findAll();
+
+  //   const ratingTeams = this.service.getEveryTeam(allTeams, 'away');
+
+  //   return res.status(200).json(ratingTeams);
+  // };
 }

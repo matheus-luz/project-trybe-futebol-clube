@@ -1,118 +1,117 @@
+import { TTeam } from '../../types/TTeam';
 import { TLeaderboard } from '../../types/TLeaderboard';
-import { TMatch } from '../../types/TMatch';
 
 export default class LeaderboardFunctions {
-  public getTotalPoints = (matches: TMatch[], compare: string) => {
+  public getTotalPoints = (team: TTeam, compare: string) => {
     let count = 0;
     if (compare === 'home') {
-      matches.forEach((match) => {
-        if (match.homeTeamGoals > match.awayTeamGoals) {
+      team.homeMatches.forEach((t) => {
+        if (t.homeTeamGoals > t.awayTeamGoals) {
           count += 3;
-        } if (match.homeTeamGoals === match.awayTeamGoals) {
+        } if (t.homeTeamGoals === t.awayTeamGoals) {
           count += 1;
         }
       });
     }
-    matches.forEach((match) => {
-      if (match.homeTeamGoals < match.awayTeamGoals) {
+    team.awayMatches.forEach((t) => {
+      if (t.homeTeamGoals < t.awayTeamGoals) {
         count += 3;
-      } if (match.homeTeamGoals === match.awayTeamGoals) {
+      } if (t.homeTeamGoals === t.awayTeamGoals) {
         count += 1;
       }
     });
     return count;
   };
 
-  public getTotalGames = (matches: TMatch[]) => matches.length;
+  public getTotalGames = () => 3;
 
-  public getTotalVictory = (matches: TMatch[], compare: string) => {
+  public getTotalVictory = (team: TTeam, compare: string) => {
     let count = 0;
     if (compare === 'home') {
-      matches.forEach((match) => {
-        if (match.homeTeamGoals > match.awayTeamGoals) {
+      team.homeMatches.forEach((t) => {
+        if (t.homeTeamGoals > t.awayTeamGoals) {
           count += 1;
         }
       });
     }
-    matches.forEach((match) => {
-      if (match.homeTeamGoals < match.awayTeamGoals) {
+    team.awayMatches.forEach((t) => {
+      if (t.homeTeamGoals < t.awayTeamGoals) {
         count += 1;
       }
     });
     return count;
   };
 
-  public getTotalDraws = (matches: TMatch[]) => {
+  public getTotalDraws = (team: TTeam) => {
     let count = 0;
-    matches.forEach((match) => {
-      if (match.homeTeamGoals === match.awayTeamGoals) {
+    team.homeMatches.forEach((t) => {
+      if (t.homeTeamGoals === t.awayTeamGoals) {
         count += 1;
       }
     });
-
     return count;
   };
 
-  public getTotalLosses = (matches: TMatch[], compare: string) => {
+  public getTotalLosses = (teams: TTeam, compare: string) => {
     let count = 0;
     if (compare === 'home') {
-      matches.forEach((matc) => {
-        if (matc.homeTeamGoals < matc.awayTeamGoals) {
+      teams.homeMatches.forEach((team) => {
+        if (team.homeTeamGoals < team.awayTeamGoals) {
           count += 1;
         }
       });
     }
-    matches.forEach((matc) => {
-      if (matc.homeTeamGoals > matc.awayTeamGoals) {
+    teams.awayMatches.forEach((team) => {
+      if (team.homeTeamGoals > team.awayTeamGoals) {
         count += 1;
       }
     });
     return count;
   };
 
-  public getGoalsFavor = (matches: TMatch[], compare: string) => {
+  public getGoalsFavor = (teams: TTeam, compare: string) => {
     let count = 0;
     if (compare === 'home') {
-      matches.forEach((match) => {
-        count += match.homeTeamGoals;
+      teams.homeMatches.forEach((team) => {
+        count += team.homeTeamGoals;
       });
     }
-    matches.forEach((match) => {
-      count += match.awayTeamGoals;
+    teams.awayMatches.forEach((team) => {
+      count += team.awayTeamGoals;
     });
     return count;
   };
 
-  public getGoalsOwn = (matches: TMatch[], compare: string) => {
+  public getGoalsOwn = (teams: TTeam, compare: string) => {
     let count = 0;
     if (compare === 'home') {
-      matches.forEach((match) => {
-        count += match.awayTeamGoals;
+      teams.homeMatches.forEach((team) => {
+        count += team.awayTeamGoals;
       });
     }
-    matches.forEach((match) => {
-      count += match.homeTeamGoals;
+    teams.awayMatches.forEach((team) => {
+      count += team.homeTeamGoals;
     });
     return count;
   };
 
-  public getGoalsBalance = (matches: TMatch[], compare: string) => {
+  public getGoalsBalance = (teams: TTeam, compare: string) => {
     let count = 0;
     if (compare === 'home') {
-      matches.forEach((match) => {
-        count = match.homeTeamGoals - match.awayTeamGoals;
+      teams.homeMatches.forEach((team) => {
+        count = team.homeTeamGoals - team.awayTeamGoals;
       });
     }
-    matches.forEach((match) => {
-      count = match.awayTeamGoals - match.homeTeamGoals;
+    teams.awayMatches.forEach((team) => {
+      count = team.awayTeamGoals - team.homeTeamGoals;
     });
     return count;
   };
 
-  public getEfficiency = (matches: TMatch[], compare: string) => {
-    const games = this.getTotalGames(matches);
-    const total = this.getTotalPoints(matches, compare);
-    return Number(((total / (games * 3)) * 100).toFixed(2));
+  public getEfficiency = (teams: TTeam, compare: string) => {
+    // const games = this.getTotalGames(teams);
+    const total = this.getTotalPoints(teams, compare);
+    return Number(((total / (3 * 3)) * 100).toFixed(2));
   };
 
   public getOrderTeams = (leader: TLeaderboard[]) => leader.sort((teamA, teamB) =>

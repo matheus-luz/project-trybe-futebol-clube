@@ -9,9 +9,9 @@ routerLeaderboard.get(
   leaderboard.getEveryTeamHome,
 );
 
-routerLeaderboard.get(
-  '/away',
-  leaderboard.getEveryTeamAway,
-);
+// routerLeaderboard.get(
+//   '/away',
+//   leaderboard.getEveryTeamHome,
+// );
 
 export default routerLeaderboard;
